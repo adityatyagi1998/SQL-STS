@@ -1,38 +1,43 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
-    }
+plugins {
+    id 'org.springframework.boot' version '2.1.1.RELEASE'
+    id 'java'
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-bootJar {
-    baseName = 'gs-accessing-data-mysql'
-    version =  '0.1.0'
-}
+group = 'com.GoogleApi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+ext {
+    set('springCloudVersion', 'Greenwich.SR1')
+}
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-    
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    
-    compile 'mysql:mysql-connector-java'
-
+    compile('org.springframework.boot:spring-boot-starter')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.security.oauth:spring-security-oauth2')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile ('mysql:mysql-connector-java')
+    //compile ('org.springframework.data:spring-data-jpa')
+
+    compile 'com.google.apis:google-api-services-oauth2:v1-rev149-1.25.0'
+    compile group: 'com.google.http-client', name: 'google-http-client', version: '1.25.0'
+    compile group:'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.5.RELEASE'
+
+// https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
+    compile group: 'org.eclipse.persistence', name: 'javax.persistence', version: '2.1.0'
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }

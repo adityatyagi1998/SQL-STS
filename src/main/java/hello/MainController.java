@@ -18,13 +18,17 @@ public class MainController {
     private UserRepository userRepository;
 
     @GetMapping(path="/add") // Map ONLY GET Requests
-    public @ResponseBody String addNewUser (@RequestParam String name
-            , @RequestParam String email) {
+    public @ResponseBody String addNewUser (@RequestParam String inclusion, @RequestParam String mettle, @RequestParam String pioneering, @RequestParam String accountability, @RequestParam String collaboration, @RequestParam String trust) {
 
 
         User n = new User();
-        n.setName(name);
-        n.setEmail(email);
+
+        n.setInclusion(inclusion);
+        n.setMettle(mettle);
+        n.setPioneering(pioneering);
+        n.setAccountability(accountability);
+        n.setCollaboration(collaboration);
+        n.setTrust(trust);
         userRepository.save(n);
         return "Saved";
     }
